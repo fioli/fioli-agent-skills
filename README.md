@@ -88,7 +88,7 @@ on — most importantly `AGENTS.md`, which every agent reads at the start of eac
 session and which tells it to follow the workflow and keep the docs in sync.
 Without this step, agents working in the project will not apply the workflow.
 
-From the project root, ask your agent *"bootstrap living docs in this
+From the project root, ask your agent *"bootstrap living docs skill in this
 project"*, or run:
 
 ```bash
