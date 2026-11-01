@@ -125,6 +125,8 @@ In the same change as the code:
 - [ ] No accepted ADR was edited except for its status.
 - [ ] ADR index updated.
 - [ ] Docs changes are in the **same commit** as the code changes.
+- [ ] End-of-task response states which doc files were updated (or why none
+      needed updating).
 
 ## Commit hook
 

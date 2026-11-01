@@ -18,7 +18,10 @@ coding agent (Claude Code, Codex, Antigravity, …) and to humans.
    **`ARCHITECTURE.md` follows the arc42 template** (keep all section
    headings) with **C4 diagrams in Mermaid**.
 5. **Documentation language: English.**
-6. For procedures, templates and helper scripts use the **`living-docs`**
+6. **Report doc updates.** At the end of every task, explicitly state which
+   documentation files were updated, or briefly explain why no doc update was
+   needed.
+7. For procedures, templates and helper scripts use the **`living-docs`**
    skill. If the skill is not available, follow the rules above and the
    existing files in `docs/` as examples.
 
