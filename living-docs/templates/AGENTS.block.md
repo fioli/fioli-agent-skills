@@ -15,6 +15,8 @@ coding agent (Claude Code, Codex, Antigravity, …) and to humans.
    their index. A task is not done until the docs match the code.
 4. **ADRs use MADR 4** (full template for major decisions, minimal for minor
    ones). Accepted ADRs are immutable: supersede them, never rewrite them.
+   **`ARCHITECTURE.md` follows the arc42 template** (keep all section
+   headings) with **C4 diagrams in Mermaid**.
 5. **Documentation language: English.**
 6. For procedures, templates and helper scripts use the **`living-docs`**
    skill. If the skill is not available, follow the rules above and the

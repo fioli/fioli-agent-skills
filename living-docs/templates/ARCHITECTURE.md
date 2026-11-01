@@ -1,64 +1,199 @@
 # {Project name} — Architecture
 
-> Living document: it describes the system **as it currently is**.
+> **Living document:** describes the system **as it currently is**.
 > Planned work lives in [PLAN.md](PLAN.md); the reasons behind choices live in
-> [decisions/](decisions/README.md).
-> Structure loosely based on [arc42](https://arc42.org). Sections may stay `TBD`
-> until relevant.
+> [decisions/](decisions/README.md) (MADR 4 ADRs).
+> Diagrams follow the [C4 model](https://c4model.com) (Mermaid).
+> Sections may stay empty until relevant.
 
 _Last updated: {YYYY-MM-DD}_
 
-## 1. Introduction and goals
+<sub>Structure: [arc42](https://arc42.org) template version 9.1-EN (October 2026),
+© Dr. Peter Hruschka, Dr. Gernot Starke and contributors,
+[CC BY-SA 4.0](https://arc42.org/license). Changes: header replaced;
+section structure unchanged.</sub>
 
-### Purpose
-TBD — what the system does and for whom.
+# Introduction and Goals
 
-### Key requirements
-TBD
+## Requirements Overview
 
-### Quality goals
-TBD — top 3–5 quality attributes (e.g. simplicity, reliability, cost).
+## Quality Goals
 
-## 2. Constraints
+## Stakeholders
 
-TBD — technical, organizational, legal or budget constraints.
+| Role/Name    | Contact         | Expectations        |
+|--------------|-----------------|---------------------|
+| *\<Role-1\>* | *\<Contact-1\>* | *\<Expectation-1\>* |
+| *\<Role-2\>* | *\<Contact-2\>* | *\<Expectation-2\>* |
 
-## 3. Context and scope
+# Architecture Constraints
 
-TBD — the system and its external actors/systems (users, APIs, data sources).
+# Context and Scope
 
-## 4. Solution strategy
+## Business Context
 
-Key decisions, one line each, linking to the ADR:
+**\<Diagram or Table\>**
 
-- TBD
+**\<optionally: Explanation of external domain interfaces\>**
 
-## 5. Building blocks
+## Technical Context
 
-TBD — main components/modules, responsibilities and interfaces.
+**\<Diagram or Table\>**
 
-## 6. Runtime view
+**\<optionally: Explanation of technical interfaces\>**
 
-TBD — important flows (e.g. "create a quotation").
+**\<Mapping Input/Output to Channels\>**
 
-## 7. Deployment view
+# Solution Strategy
 
-TBD — environments, infrastructure, how the system is run.
+# Building Block View
 
-## 8. Crosscutting concepts
+## Whitebox Overall System
 
-TBD — data model, security, error handling, logging, testing, configuration.
+***\<Overview Diagram\>***
 
-## 9. Quality and testing
+Motivation  
+*\<text explanation\>*
 
-TBD — how quality goals are verified.
+Contained Building Blocks  
+*\<Description of contained building block (black boxes)\>*
 
-## 10. Risks and technical debt
+Important Interfaces  
+*\<Description of important interfaces\>*
 
-TBD
+### \<Name black box 1\>
 
-## 11. Glossary
+*\<Purpose/Responsibility\>*
 
-| Term | Definition |
-|---|---|
-| | |
+*\<Interface(s)\>*
+
+*\<(Optional) Quality/Performance Characteristics\>*
+
+*\<(Optional) Directory/File Location\>*
+
+*\<(Optional) Fulfilled Requirements\>*
+
+*\<(optional) Open Issues/Problems/Risks\>*
+
+### \<Name black box 2\>
+
+*\<black box template\>*
+
+### \<Name black box n\>
+
+*\<black box template\>*
+
+### \<Name interface 1\>
+
+…​
+
+### \<Name interface m\>
+
+## Level 2
+
+### White Box *\<building block 1\>*
+
+*\<white box template\>*
+
+### White Box *\<building block 2\>*
+
+*\<white box template\>*
+
+…​
+
+### White Box *\<building block m\>*
+
+*\<white box template\>*
+
+## Level 3
+
+### White Box \<\_building block x.1\_\>
+
+*\<white box template\>*
+
+### White Box \<\_building block x.2\_\>
+
+*\<white box template\>*
+
+### White Box \<\_building block y.1\_\>
+
+*\<white box template\>*
+
+# Runtime View
+
+## \<Runtime Scenario 1\>
+
+- *\<insert runtime diagram or textual description of the scenario\>*
+
+- *\<insert description of the notable aspects of the interactions
+  between the building block instances depicted in this diagram.\>*
+
+## \<Runtime Scenario 2\>
+
+## …​
+
+## \<Runtime Scenario n\>
+
+# Deployment View
+
+## Infrastructure Level 1
+
+***\<Overview Diagram\>***
+
+Motivation  
+*\<explanation in text form\>*
+
+Quality and/or Performance Features  
+*\<explanation in text form\>*
+
+Mapping of Building Blocks to Infrastructure  
+*\<description of the mapping\>*
+
+## Infrastructure Level 2
+
+### *\<Infrastructure Element 1\>*
+
+*\<diagram + explanation\>*
+
+### *\<Infrastructure Element 2\>*
+
+*\<diagram + explanation\>*
+
+…​
+
+### *\<Infrastructure Element n\>*
+
+*\<diagram + explanation\>*
+
+# Cross-cutting Concepts
+
+## *\<Concept 1\>*
+
+*\<explanation\>*
+
+## *\<Concept 2\>*
+
+*\<explanation\>*
+
+…​
+
+## *\<Concept n\>*
+
+*\<explanation\>*
+
+# Architecture Decisions
+
+# Quality Requirements
+
+## Quality Requirements Overview
+
+## Quality Scenarios
+
+# Risks and Technical Debts
+
+# Glossary
+
+| Term         | Definition         |
+|--------------|--------------------|
+| *\<Term-1\>* | *\<definition-1\>* |
+| *\<Term-2\>* | *\<definition-2\>* |

@@ -46,6 +46,12 @@ hook that warns when code changes without doc changes.
   `AGENTS.md`; the skill holds the how-to, templates and scripts.
 - **MADR 4** for ADRs (full + minimal templates, verbatim from upstream; see
   [SOURCE.md](living-docs/references/madr/SOURCE.md)).
-- **arc42-lite** structure for `ARCHITECTURE.md`.
+- **Official arc42 template** (v9.1, verbatim section structure) for
+  `ARCHITECTURE.md`, with **C4 model diagrams in Mermaid** (see
+  [arc42 SOURCE.md](living-docs/references/arc42/SOURCE.md) and
+  [c4.md](living-docs/references/c4.md)). Replaces an earlier custom
+  "arc42-lite" structure, which was not a standard.
+- Decisions about this repo are recorded here in the README (no ADRs for the
+  skill itself).
 - **Git hook** (agent-independent) as a safety net, warn-only by default
   (`git config livingdocs.strict true` to block).

@@ -22,7 +22,7 @@ match the code.
 |---|---|---|
 | `AGENTS.md` | Always-on rules for any coding agent (managed block) | — |
 | `CLAUDE.md` | Contains `@AGENTS.md` so Claude Code loads the same rules | — |
-| `docs/ARCHITECTURE.md` | The system **as it is now** (arc42-lite structure) | Present |
+| `docs/ARCHITECTURE.md` | The system **as it is now** (official arc42 structure, C4 diagrams) | Present |
 | `docs/PLAN.md` | Roadmap: phases, steps, status, links to ADRs | Future / status |
 | `docs/decisions/NNNN-title.md` | One decision per file, MADR 4 format | Past (immutable) |
 | `docs/decisions/README.md` | Index of all ADRs with status | — |
@@ -43,21 +43,36 @@ Use when the project has no `docs/ARCHITECTURE.md` yet, or the user asks to
    - `--vendor` also copies this skill into `.agents/skills/living-docs` and
      links it into `.claude/skills/` (for shared repos / cloud agents).
    - The script is idempotent: safe to re-run; it never overwrites existing docs.
-2. Fill the `{placeholders}` in `docs/ARCHITECTURE.md` only with information
-   the user has actually provided. Leave unknown sections as `TBD`.
+2. Fill `docs/ARCHITECTURE.md` only with information the user has actually
+   provided. Leave the other sections empty (keep their headings).
+
+## ARCHITECTURE.md: arc42 + C4
+
+- Structure is the **official arc42 template** (12 sections). Keep all section
+  headings and their order, even when empty. Remove the `<placeholder>` text of
+  a section when you fill it; replace sub-headings like `<Name black box 1>`
+  with real names.
+- Before writing a section, read its explanation in
+  [references/arc42/arc42-template-EN-withhelp.md](references/arc42/SOURCE.md)
+  (or https://docs.arc42.org).
+- Diagrams use the **C4 model in Mermaid**; see
+  [references/c4.md](references/c4.md) for the C4 → arc42 mapping and syntax.
+- "Architecture Decisions" section: link to `decisions/README.md` and list the
+  key ADRs (one line each). Do not duplicate ADR content.
+- Describe only what is built. Planned items belong in `PLAN.md`.
 
 ## Mode 2 — Design and planning
 
 Use while discussing requirements and architecture with the user.
 
-1. Clarify requirements; record them in `ARCHITECTURE.md` §1 (goals) and §2
-   (constraints).
+1. Clarify requirements; record them in arc42 "Introduction and Goals" and
+   "Architecture Constraints".
 2. For each significant choice, present options with pros/cons and **let the
    user decide**. Do not record a decision the user has not confirmed
    (use status `proposed` if it is pending).
 3. Write one ADR per decision (see "Writing ADRs").
-4. Update `ARCHITECTURE.md` §4 (solution strategy) with a one-line summary
-   linking each ADR.
+4. Update arc42 "Solution Strategy" (short summary) and "Architecture
+   Decisions" (links to the ADRs).
 5. Write or update `PLAN.md`: small, verifiable steps, each linked to the
    ADRs it depends on.
 
@@ -70,8 +85,9 @@ Before coding:
    **stop and ask the user**; then write a new ADR before coding.
 
 In the same change as the code:
-3. Update `ARCHITECTURE.md` so it describes the code as it now is
-   (components, interfaces, data model, deployment, crosscutting concepts).
+3. Update `ARCHITECTURE.md` so it describes the code as it now is: arc42
+   Building Block View, Runtime View, Deployment View, Cross-cutting Concepts,
+   Risks and Technical Debts, Glossary; update the affected C4 diagrams.
 4. Update `PLAN.md`: step status, and any new steps discovered.
 5. Update the ADR index if ADRs changed.
 6. Run the **Definition of Done** checklist below.
@@ -103,7 +119,7 @@ In the same change as the code:
 ## Definition of Done (docs)
 
 - [ ] `ARCHITECTURE.md` reflects the current code (no stale components or
-      descriptions of things not built yet).
+      descriptions of things not built yet), C4 diagrams included.
 - [ ] `PLAN.md` step status updated; new follow-up steps added.
 - [ ] Every new significant choice has an ADR, confirmed by the user.
 - [ ] No accepted ADR was edited except for its status.
