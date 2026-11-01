@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# living-docs commit-msg hook
+# Warns (or blocks, in strict mode) when a commit changes non-doc files
+# without touching any documentation file.
+#
+#   Bypass for one commit : put [no-docs] in the commit message
+#   Strict mode (block)   : git config livingdocs.strict true
+#   Disable completely    : git config livingdocs.enabled false
+
+set -euo pipefail
+
+msg_file="${1:-}"
+
+[ "$(git config --bool livingdocs.enabled || echo true)" = "false" ] && exit 0
+
+# Skip merge commits and explicit opt-out.
+if [ -n "$msg_file" ] && [ -f "$msg_file" ]; then
+  grep -qiF '[no-docs]' "$msg_file" && exit 0
+fi
+[ -f "$(git rev-parse --git-dir)/MERGE_HEAD" ] && exit 0
+
+staged="$(git diff --cached --name-only --diff-filter=ACMRD)"
+[ -z "$staged" ] && exit 0
+
+# Paths considered documentation.
+is_doc() {
+  case "$1" in
+    docs/*|AGENTS.md|CLAUDE.md|README.md|*/AGENTS.md|*/README.md) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+# Paths ignored by the check (tooling, not product code).
+is_ignored() {
+  case "$1" in
+    .githooks/*|.agents/*|.claude/*|.gitignore|.gitattributes) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+code_changed=0
+docs_changed=0
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  if is_doc "$f"; then docs_changed=1
+  elif ! is_ignored "$f"; then code_changed=1
+  fi
+done <<< "$staged"
+
+if [ "$code_changed" -eq 1 ] && [ "$docs_changed" -eq 0 ]; then
+  strict="$(git config --bool livingdocs.strict || echo false)"
+  {
+    echo ""
+    echo "⚠️  living-docs: this commit changes code but no documentation."
+    echo "    Update docs/ARCHITECTURE.md, docs/PLAN.md or the ADRs in docs/decisions/"
+    echo "    in the same commit, or add [no-docs] to the message if there is no doc impact."
+    echo ""
+  } >&2
+  if [ "$strict" = "true" ]; then
+    echo "    Commit blocked (strict mode: git config livingdocs.strict true)." >&2
+    exit 1
+  fi
+fi
+exit 0
