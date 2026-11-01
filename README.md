@@ -61,16 +61,43 @@ Architecture-first workflow: **decide together → document → implement → ke
 docs in sync**. Documentation is part of the deliverable: a task is not done
 until the docs match the code.
 
-- Skill instructions: [living-docs/SKILL.md](living-docs/SKILL.md)
-- Install: `./install.sh living-docs`
+Skill instructions: [living-docs/SKILL.md](living-docs/SKILL.md)
 
-### What it sets up in a project
+### Getting started
 
-Ask your agent *"bootstrap living docs in this project"*, or run:
+Using living-docs takes two steps:
+
+| Step | What | How often |
+|---|---|---|
+| 1 | **Install** the skill | Once per machine |
+| 2 | **Bootstrap** the project | Once in **every project** where you want to use the skill |
+
+#### Step 1 — Install the skill (once per machine)
+
+```bash
+./install.sh living-docs
+```
+
+This makes the skill available to every coding agent on your machine (see
+[Installation](#installation)). Re-running it is safe.
+
+#### Step 2 — Bootstrap each project (required before using the skill)
+
+Installing the skill is not enough: each project must be **initialized** before
+the workflow can be used in it. Bootstrap creates the files the workflow relies
+on — most importantly `AGENTS.md`, which every agent reads at the start of each
+session and which tells it to follow the workflow and keep the docs in sync.
+Without this step, agents working in the project will not apply the workflow.
+
+From the project root, ask your agent *"bootstrap living docs in this
+project"*, or run:
 
 ```bash
 bash ~/.agents/skills/living-docs/scripts/bootstrap.sh [--vendor] [project-dir]
 ```
+
+`project-dir` defaults to the current directory. Bootstrap runs `git init` if
+the project is not a git repository yet, then creates:
 
 | File | Purpose |
 |---|---|
@@ -81,11 +108,23 @@ bash ~/.agents/skills/living-docs/scripts/bootstrap.sh [--vendor] [project-dir]
 | `docs/decisions/` | ADRs in MADR 4 format + `README.md` index |
 | `.githooks/commit-msg` | Warns when code changes without doc changes |
 
-`--vendor` also copies the skill into the project (`.agents/skills/`, linked
-from `.claude/skills/`), for shared repos or cloud agents that cannot see your
-home directory. Bootstrap is idempotent and never overwrites existing docs.
+It also sets `git config core.hooksPath .githooks` to enable the hook.
 
-Other helpers:
+- `--vendor` also copies the skill into the project (`.agents/skills/`, linked
+  from `.claude/skills/`), for shared repos or cloud agents that cannot see
+  your home directory.
+- Bootstrap is idempotent: re-running it never overwrites existing docs; it
+  only refreshes the managed block in `AGENTS.md` and the hook.
+- Bootstrap does not commit: review and commit the generated files yourself.
+- `core.hooksPath` is a local git setting and is not versioned: after cloning
+  a bootstrapped project (on another machine or by another person), run
+  `git config core.hooksPath .githooks` to enable the hook again.
+
+Once bootstrapped, start working with your agent as usual: discuss
+requirements and architecture, and it will record decisions as ADRs, keep
+`docs/` updated and follow the plan.
+
+### Helpers
 
 ```bash
 # New ADR with the next number (full template; --minimal for minor decisions)
@@ -96,9 +135,6 @@ git config livingdocs.strict true    # block instead of warn
 git config livingdocs.enabled false  # disable
 # one-off bypass: put [no-docs] in the commit message
 ```
-
-After cloning a bootstrapped project, enable the hook with
-`git config core.hooksPath .githooks`.
 
 ### Design decisions
 
