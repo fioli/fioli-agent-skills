@@ -1,4 +1,4 @@
-# agent-skills
+# fioli-agent-skills
 
 A collection of personal, **agent-agnostic skills** following the open
 [Agent Skills](https://agentskills.io) standard (`SKILL.md`).
@@ -19,8 +19,8 @@ install **only the skills you need**.
 Requirements: `bash`, `git`, a Unix-like system (Linux, macOS, WSL).
 
 ```bash
-git clone <this-repo-url> ~/DEV/agent-skills
-cd ~/DEV/agent-skills
+git clone <this-repo-url> ~/DEV/fioli-agent-skills
+cd ~/DEV/fioli-agent-skills
 
 ./install.sh --list                   # available skills and install status
 ./install.sh living-docs              # install one skill
