@@ -63,14 +63,13 @@ until the docs match the code.
 
 Skill instructions: [living-docs/SKILL.md](living-docs/SKILL.md)
 
-### Getting started
-
-Using living-docs takes two steps:
+### How to use
 
 | Step | What | How often |
 |---|---|---|
 | 1 | **Install** the skill | Once per machine |
-| 2 | **Bootstrap** the project | Once in **every project** where you want to use the skill |
+| 2 | **Bootstrap** the project | Once in **every project** where you want to use it |
+| 3 | **Work with your agent** | Daily workflow (design, ADRs, implementation) |
 
 #### Step 1 — Install the skill (once per machine)
 
@@ -120,9 +119,28 @@ It also sets `git config core.hooksPath .githooks` to enable the hook.
   a bootstrapped project (on another machine or by another person), run
   `git config core.hooksPath .githooks` to enable the hook again.
 
-Once bootstrapped, start working with your agent as usual: discuss
-requirements and architecture, and it will record decisions as ADRs, keep
-`docs/` updated and follow the plan.
+#### Step 3 — Work with your coding agent
+
+Chat normally with your coding agent (Claude Code, Antigravity, Codex, …).
+Because `AGENTS.md` is loaded automatically at every session, the agent
+already knows the rules:
+
+1. **Design and planning:** discuss requirements and architecture with the
+   agent. It proposes options with pros/cons, records every confirmed choice
+   as a MADR 4 ADR in `docs/decisions/`, and fills `docs/ARCHITECTURE.md` and
+   `docs/PLAN.md`.
+2. **Implementation:** ask the agent to implement steps from the plan. Before
+   coding it reads `PLAN.md`, `ARCHITECTURE.md` and the relevant ADRs; it
+   updates `docs/` in the **same commit** as the code, and at the end of every
+   task reports which documentation files were updated (or why none needed
+   updating).
+3. **Changing a decision:** if a task requires deviating from an accepted ADR
+   or making a new significant choice, the agent stops, asks you, and writes a
+   new ADR superseding the old one before coding.
+
+> Tip: you do not have to mention the skill explicitly, thanks to `AGENTS.md`,
+> though saying *"use living-docs to…"* at the start of a design or planning
+> session guarantees the full templates and checklists are loaded right away.
 
 ### Helpers
 
