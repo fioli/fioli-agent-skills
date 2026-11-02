@@ -3,7 +3,7 @@
 [← All skills](README.md) · Skill instructions: [living-docs/SKILL.md](living-docs/SKILL.md)
 
 Architecture-first workflow: **decide together → document → implement → keep
-docs in sync**. Documentation is part of the deliverable: a task is not done
+docs in sync** with every code change. Documentation is part of the deliverable: a task is not done
 until the docs match the code.
 
 Rather than inventing custom document formats, `living-docs` builds on

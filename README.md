@@ -19,8 +19,8 @@ install **only the skills you need**.
 Requirements: `bash`, `git`, a Unix-like system (Linux, macOS, WSL).
 
 ```bash
-git clone <this-repo-url> ~/DEV/fioli-agent-skills
-cd ~/DEV/fioli-agent-skills
+git clone https://github.com/fioli/fioli-agent-skills.git
+cd fioli-agent-skills
 
 ./install.sh --list                   # available skills and install status
 ./install.sh living-docs              # install one skill
