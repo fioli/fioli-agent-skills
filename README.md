@@ -2,7 +2,7 @@
 
 A collection of personal, **agent-agnostic skills** following the open
 [Agent Skills](https://agentskills.io) standard (`SKILL.md`).
-Each skill works with Claude Code, Codex, Antigravity and any other agent that
+Each skill works with Antigravity, Claude Code, Codex  and any other agent that
 reads `SKILL.md` skills and `AGENTS.md`.
 
 Each top-level folder containing a `SKILL.md` is one independent skill. You can
@@ -12,7 +12,7 @@ install **only the skills you need**.
 
 | Skill | Purpose |
 |---|---|
-| [living-docs](README-living-docs.md) | Architecture-first workflow with living documentation (MADR 4 ADRs, arc42 + C4, docs kept in sync with code) |
+| [living-docs](README-living-docs.md) | Keep project documentation up to date with every code change |
 
 ## Installation
 
