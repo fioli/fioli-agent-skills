@@ -6,6 +6,11 @@ Architecture-first workflow: **decide together → document → implement → ke
 docs in sync**. Documentation is part of the deliverable: a task is not done
 until the docs match the code.
 
+Rather than inventing custom document formats, `living-docs` builds on
+established open standards — **arc42** and **C4** for architecture, **MADR 4**
+for Architecture Decision Records — bundling their official templates verbatim
+inside `living-docs/references/`.
+
 ## How to use
 
 | Step | What | How often |
@@ -102,14 +107,19 @@ git config livingdocs.enabled false  # disable
 - **Rules in `AGENTS.md`, procedure in the skill.** Skills are loaded on demand,
   so the always-on rule ("update docs with the code") lives in each project's
   `AGENTS.md`; the skill holds the how-to, templates and scripts.
-- **MADR 4** for ADRs: full template for major decisions, minimal for minor
-  ones. Templates verbatim from upstream
-  ([SOURCE.md](living-docs/references/madr/SOURCE.md)).
-- **Official arc42 template** (v9.1, section structure unchanged) for
-  `ARCHITECTURE.md`, with **C4 model diagrams in Mermaid**
-  ([arc42 SOURCE.md](living-docs/references/arc42/SOURCE.md),
-  [c4.md](living-docs/references/c4.md)). Replaces an earlier custom
-  "arc42-lite" structure, which was not a standard.
+- **Established standards, bundled verbatim (`SOURCE.md`).** Instead of custom
+  templates, `living-docs/references/` ships unmodified upstream copies of the
+  official standards so agents work from authoritative material. Each third-party
+  folder includes a `SOURCE.md` recording origin, exact version, license
+  attribution, and the command to refresh the files from upstream (never edit
+  them by hand):
+  - **MADR 4** for ADRs — full template for major decisions, minimal for minor
+    ones ([madr/SOURCE.md](living-docs/references/madr/SOURCE.md)).
+  - **Official arc42 template** (v9.1, section structure unchanged) for
+    `ARCHITECTURE.md`, paired with **C4 model diagrams in Mermaid**
+    ([arc42/SOURCE.md](living-docs/references/arc42/SOURCE.md),
+    [c4.md](living-docs/references/c4.md)). Replaces an earlier custom
+    "arc42-lite" structure, which was not a standard.
 - **Documentation language: English.**
 - **`commit-msg` git hook** (agent-independent) as a safety net, warn-only by
   default. `commit-msg` rather than `pre-commit` because it can read the
