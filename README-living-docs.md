@@ -7,9 +7,10 @@ docs in sync** with every code change. Documentation is part of the deliverable:
 until the docs match the code.
 
 Rather than inventing custom document formats, `living-docs` builds on
-established open standards — **arc42** and **C4** for architecture, **MADR 4**
-for Architecture Decision Records — bundling their official templates verbatim
-inside `living-docs/references/`.
+established open standards — **[arc42](https://arc42.org)** and
+**[C4](https://c4model.com)** for architecture,
+**[MADR 4](https://adr.github.io/madr/)** for Architecture Decision Records —
+bundling their official templates verbatim inside `living-docs/references/`.
 
 ## How to use
 
