@@ -31,14 +31,16 @@ This makes the skill available to every coding agent on your machine (see
 
 ### Step 2 — Bootstrap each project (required before using the skill)
 
-Installing the skill is not enough: each project must be **initialized** before
-the workflow can be used in it. Bootstrap creates the files the workflow relies
-on — most importantly `AGENTS.md`, which every agent reads at the start of each
-session and which tells it to follow the workflow and keep the docs in sync.
-Without this step, agents working in the project will not apply the workflow.
+Installing the skill is not enough: each project — **new (greenfield) or
+existing (brownfield)** — must be **initialized** before the workflow can be
+used in it. Bootstrap creates the files the workflow relies on — most
+importantly `AGENTS.md`, which every agent reads at the start of each session
+and which tells it to follow the workflow and keep the docs in sync. Without
+this step, agents working in the project will not apply the workflow.
 
 From the project root, ask your agent *"bootstrap living docs skill in this
-project"*, or run:
+project"* (or *"use living-docs to document this project"* on an existing
+codebase), or run:
 
 ```bash
 bash ~/.agents/skills/living-docs/scripts/bootstrap.sh [--vendor] [project-dir]
@@ -57,6 +59,20 @@ the project is not a git repository yet, then creates:
 | `.githooks/commit-msg` | Warns when code changes without doc changes |
 
 It also sets `git config core.hooksPath .githooks` to enable the hook.
+
+What the agent fills in right after bootstrap depends on the project state:
+
+- **New (greenfield) project:** `docs/ARCHITECTURE.md` is filled only with
+  requirements and constraints you have already shared (other sections stay
+  empty until designed); `docs/PLAN.md` and ADRs grow as you make decisions
+  together.
+- **Existing (brownfield) codebase:** the agent documents only the factual
+  **as-is** architecture observable in the code (`docs/ARCHITECTURE.md`) and
+  leaves `docs/decisions/` empty so ADRs start from decisions made going
+  forward — without inventing retroactive ADRs or guessing past alternatives
+  (unless you explicitly ask for one and provide the real rationale).
+
+Notes on `bootstrap.sh`:
 
 - `--vendor` also copies the skill into the project (`.agents/skills/`, linked
   from `.claude/skills/`), for shared repos or cloud agents that cannot see
@@ -122,6 +138,12 @@ git config livingdocs.enabled false  # disable
     [c4.md](living-docs/references/c4.md)). Replaces an earlier custom
     "arc42-lite" structure, which was not a standard.
 - **Documentation language: English.**
+- **Brownfield bootstrap: as-is architecture only, no invented retroactive ADRs.**
+  When adopting `living-docs` on an existing codebase, `ARCHITECTURE.md` captures
+  the factual current state observable in the code while `docs/decisions/`
+  starts empty for future decisions. Guessing past `Considered Options` would
+  record fake history; retroactive ADRs are only written when a human explicitly
+  provides the real rationale.
 - **`commit-msg` git hook** (agent-independent) as a safety net, warn-only by
   default. `commit-msg` rather than `pre-commit` because it can read the
   message and honour `[no-docs]`.

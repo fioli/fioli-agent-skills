@@ -2,12 +2,13 @@
 name: living-docs
 description: >-
   Architecture-first workflow with living documentation. Use this skill when
-  starting or bootstrapping a new project, discussing or deciding architecture,
-  making a technical decision (stack, database, framework, integration, pattern),
-  writing or superseding an Architecture Decision Record (ADR / MADR), creating
-  or updating the implementation plan, and whenever implementing code in a
-  project that contains docs/ARCHITECTURE.md, docs/PLAN.md or docs/decisions/,
-  so that documentation is updated in the same change as the code.
+  starting or bootstrapping a project (new or existing), discussing or deciding
+  architecture, making a technical decision (stack, database, framework,
+  integration, pattern), writing or superseding an Architecture Decision Record
+  (ADR / MADR), creating or updating the implementation plan, and whenever
+  implementing code in a project that contains docs/ARCHITECTURE.md,
+  docs/PLAN.md or docs/decisions/, so that documentation is updated in the same
+  change as the code.
 ---
 
 # Living Docs
@@ -43,8 +44,19 @@ Use when the project has no `docs/ARCHITECTURE.md` yet, or the user asks to
    - `--vendor` also copies this skill into `.agents/skills/living-docs` and
      links it into `.claude/skills/` (for shared repos / cloud agents).
    - The script is idempotent: safe to re-run; it never overwrites existing docs.
-2. Fill `docs/ARCHITECTURE.md` only with information the user has actually
-   provided. Leave the other sections empty (keep their headings).
+2. Fill `docs/ARCHITECTURE.md`:
+   - **New (greenfield) project:** fill only with information the user has
+     actually provided; leave the other sections empty (keep their headings).
+   - **Existing (brownfield) codebase:** document only the factual **as-is**
+     state observable in the codebase (structure, interfaces, runtime,
+     deployment, constraints, and explicit rationales already written in code
+     or docs). Do not speculate about unstated intent.
+3. **Existing codebase — do not invent retroactive ADRs.** Leave
+   `docs/decisions/` empty (just `README.md`) so ADRs start from decisions
+   made going forward. Never fabricate `Considered Options` or historical
+   rationales by guessing from the code. Write a retroactive ADR only when the
+   user explicitly asks for one and supplies the real context (e.g., to guard a
+   non-obvious invariant).
 
 ## ARCHITECTURE.md: arc42 + C4
 
@@ -113,7 +125,8 @@ In the same change as the code:
   decision: create a new ADR, then edit only the old ADR's `status` to
   `superseded by ADR-NNNN` and add a link in "More Information".
 - Always fill "Considered Options" honestly — it prevents rejected options from
-  being proposed again.
+  being proposed again. Never invent options that were not actually considered
+  (especially when documenting an existing codebase).
 - Update `docs/decisions/README.md` (index table) on every ADR change.
 
 ## Definition of Done (docs)
