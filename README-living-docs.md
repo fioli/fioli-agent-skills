@@ -78,7 +78,7 @@ Notes on `bootstrap.sh`:
   from `.claude/skills/`), for shared repos or cloud agents that cannot see
   your home directory.
 - Bootstrap is idempotent: re-running it never overwrites existing docs; it
-  only refreshes the managed block in `AGENTS.md` and the hook.
+  only refreshes the versioned managed block in `AGENTS.md` and the hook.
 - Bootstrap does not commit: review and commit the generated files yourself.
 - `core.hooksPath` is a local git setting and is not versioned: after cloning
   a bootstrapped project (on another machine or by another person), run
@@ -147,3 +147,26 @@ git config livingdocs.enabled false  # disable
 - **`commit-msg` git hook** (agent-independent) as a safety net, warn-only by
   default. `commit-msg` rather than `pre-commit` because it can read the
   message and honour `[no-docs]`.
+- **Per-skill SemVer stamped into target projects.** The version lives in a
+  single source of truth (`metadata.version` in `living-docs/SKILL.md`, per the
+  `agentskills.io` spec) and is stamped by `bootstrap.sh` into the `AGENTS.md`
+  managed block marker (`living-docs:start vX.Y.Z`) and the `.githooks/commit-msg`
+  header. Any project can immediately tell whether its rules/hook are up to date
+  or need re-running `bootstrap.sh`. Releases use per-skill tags
+  (`living-docs/vX.Y.Z`): `MAJOR` for breaking layout/template changes, `MINOR`
+  for new rules or options, `PATCH` for fixes and clarifications.
+
+## Changelog
+
+### v1.0.0
+
+- Initial public release of `living-docs`:
+  - Architecture-first workflow using official **arc42** (v9.1), **C4** (Mermaid),
+    and **MADR 4** (full & minimal) templates bundled verbatim.
+  - Idempotent `bootstrap.sh` (with optional `--vendor`) supporting both
+    greenfield and brownfield projects, stamping the skill version into
+    `AGENTS.md` and `.githooks/commit-msg`.
+  - Brownfield rule: document only the factual *as-is* architecture and start
+    ADRs from decisions made going forward (no invented retroactive ADRs).
+  - `new-adr.sh` helper and `commit-msg` git hook (`[no-docs]` bypass,
+    `livingdocs.strict` mode).

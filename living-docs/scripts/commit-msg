@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# living-docs commit-msg hook
+# living-docs commit-msg hook ({version})
 # Warns (or blocks, in strict mode) when a commit changes non-doc files
 # without touching any documentation file.
 #

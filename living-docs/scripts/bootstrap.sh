@@ -11,6 +11,18 @@ set -euo pipefail
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 TPL="$SKILL_DIR/templates"
 
+version="$(awk '
+  NR==1 && /^---$/ { fm=1; next }
+  fm && /^---$/ { exit }
+  fm && /^metadata:/ { meta=1; next }
+  fm && meta && /^[^ \t]/ { meta=0 }
+  fm && meta && /^[ \t]+version:/ {
+    sub(/^[ \t]+version:[ \t]*/, "")
+    gsub(/^["'\'']|["'\''][ \t]*$/, "")
+    print; exit
+  }' "$SKILL_DIR/SKILL.md")"
+version="${version:-dev}"
+
 vendor=0
 project="."
 for arg in "$@"; do
@@ -27,7 +39,7 @@ name="$(basename "$project")"
 today="$(date +%F)"
 
 say() { echo "  $*"; }
-echo "living-docs bootstrap → $project"
+echo "living-docs v$version bootstrap → $project"
 
 # 1. git
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -48,19 +60,21 @@ copy_tpl "$TPL/PLAN.md"                docs/PLAN.md
 copy_tpl "$TPL/decisions-README.md"    docs/decisions/README.md
 
 # 3. AGENTS.md managed block (replace block if present, else append)
-block="$TPL/AGENTS.block.md"
+block="$(mktemp)"
+trap 'rm -f "$block"' EXIT
+sed "s/{version}/v$version/g" "$TPL/AGENTS.block.md" > "$block"
 if [ ! -f AGENTS.md ]; then
   { echo "# AGENTS.md — $name"; echo; cat "$block"; } > AGENTS.md
-  say "created: AGENTS.md"
+  say "created: AGENTS.md (v$version)"
 elif grep -q 'living-docs:start' AGENTS.md; then
   awk -v blk="$block" '
     /living-docs:start/ { while ((getline l < blk) > 0) print l; skip=1; next }
     /living-docs:end/   { skip=0; next }
     !skip' AGENTS.md > AGENTS.md.tmp && mv AGENTS.md.tmp AGENTS.md
-  say "updated: AGENTS.md (managed block)"
+  say "updated: AGENTS.md (managed block v$version)"
 else
   { echo; cat "$block"; } >> AGENTS.md
-  say "appended: AGENTS.md (managed block)"
+  say "appended: AGENTS.md (managed block v$version)"
 fi
 
 # 4. CLAUDE.md → imports AGENTS.md
@@ -75,12 +89,12 @@ fi
 
 # 5. commit-msg hook (versioned in .githooks/)
 mkdir -p .githooks
-cp "$SKILL_DIR/scripts/commit-msg" .githooks/commit-msg
+sed "s/{version}/v$version/g" "$SKILL_DIR/scripts/commit-msg" > .githooks/commit-msg
 chmod +x .githooks/commit-msg
 current="$(git config core.hooksPath || true)"
 if [ -z "$current" ] || [ "$current" = ".githooks" ]; then
   git config core.hooksPath .githooks
-  say "hook: .githooks/commit-msg installed (core.hooksPath=.githooks)"
+  say "hook: .githooks/commit-msg installed (v$version, core.hooksPath=.githooks)"
 else
   say "WARNING: core.hooksPath is '$current'; copy .githooks/commit-msg there manually"
 fi

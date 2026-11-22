@@ -1,4 +1,4 @@
-<!-- living-docs:start — managed by the living-docs skill; edit outside this block -->
+<!-- living-docs:start {version} — managed by the living-docs skill; edit outside this block -->
 ## Working agreement: architecture-first, living documentation
 
 This project follows the **living-docs** workflow. These rules apply to every

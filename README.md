@@ -51,5 +51,10 @@ name; it reports `SKIP` instead.
 - Human documentation and design decisions for each skill live in
   `README-<skill>.md` at the repo root (keeping `<skill>/` strictly for
   agent-facing files; no ADRs for the skills themselves).
+- **Per-skill versioning (SemVer):** each skill declares its version in
+  `<skill>/SKILL.md` under `metadata.version` (per the `agentskills.io`
+  standard). Releases are tagged as `<skill>/vX.Y.Z` (e.g.
+  `living-docs/v1.0.0`), and changes are tracked under `## Changelog` in
+  `README-<skill>.md`.
 - Third-party material (templates, standards) is copied **verbatim** with a
   `SOURCE.md` stating origin, version and license.

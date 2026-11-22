@@ -35,11 +35,26 @@ description() { # first sentence of the description field of a SKILL.md
     END { sub(/\. .*/, ".", d); print d }' "$REPO/$1/SKILL.md"
 }
 
+version() { # metadata.version from a SKILL.md frontmatter (or "-")
+  local v
+  v="$(awk '
+    NR==1 && /^---$/ { fm=1; next }
+    fm && /^---$/ { exit }
+    fm && /^metadata:/ { meta=1; next }
+    fm && meta && /^[^ \t]/ { meta=0 }
+    fm && meta && /^[ \t]+version:/ {
+      sub(/^[ \t]+version:[ \t]*/, "")
+      gsub(/^["'\'']|["'\''][ \t]*$/, "")
+      print; exit
+    }' "$REPO/$1/SKILL.md")"
+  if [ -n "$v" ]; then echo "v$v"; else echo "-"; fi
+}
+
 list() {
   echo "Available skills in $REPO:"
   for s in $(available); do
     if [ "$(readlink "$HUB/$s" 2>/dev/null)" = "$REPO/$s" ]; then st="installed"; else st="not installed"; fi
-    printf "  %-20s [%s]  %s\n" "$s" "$st" "$(description "$s")"
+    printf "  %-18s %-8s [%-13s]  %s\n" "$s" "$(version "$s")" "$st" "$(description "$s")"
   done
 }
 
@@ -51,7 +66,7 @@ link() { # target linkpath
 }
 
 install_skill() {
-  echo "install: $1"
+  echo "install: $1 ($(version "$1"))"
   mkdir -p "$HUB"
   link "$REPO/$1" "$HUB/$1"
   for t in "${TARGETS[@]}"; do mkdir -p "$t"; link "$HUB/$1" "$t/$1"; done

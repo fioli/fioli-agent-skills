@@ -9,6 +9,9 @@ description: >-
   implementing code in a project that contains docs/ARCHITECTURE.md,
   docs/PLAN.md or docs/decisions/, so that documentation is updated in the same
   change as the code.
+metadata:
+  author: fioli
+  version: "1.0.0"
 ---
 
 # Living Docs
